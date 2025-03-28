@@ -16,7 +16,7 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
         Event::listen('admin.leads.view.actions.after', function ($viewData) {
             Log::info('🚀 Injecting lead pipeline switcher view');
 
-            return view('lead_pipeline_switcher::Admin.Leads.View.Actions.switcher', $viewData)->render();
+            return view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
         });
     }
 
