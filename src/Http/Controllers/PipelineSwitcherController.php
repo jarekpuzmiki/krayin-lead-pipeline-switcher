@@ -4,7 +4,7 @@ namespace Puzmiki\LeadPipelineSwitcher\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Webkul\Lead\Repositories\LeadPipelineRepository;
-use Webkul\Lead\Repositories\LeadPipelineStageRepository;
+use Webkul\Lead\Repositories\StageRepository;
 use Puzmiki\LeadPipelineSwitcher\Repositories\PipelineSwitcherRepository;
 
 class PipelineSwitcherController

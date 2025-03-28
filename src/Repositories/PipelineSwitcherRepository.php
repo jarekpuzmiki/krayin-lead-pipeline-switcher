@@ -17,7 +17,7 @@ class PipelineSwitcherRepository implements PipelineSwitcher
 
     public function __construct(
         LeadRepository $leadRepository,
-        LeadPipelineStageRepository $stageRepository,
+        StageRepository $stageRepository,
         ActivityRepository $activityRepository
     ) {
         $this->leadRepository = $leadRepository;
