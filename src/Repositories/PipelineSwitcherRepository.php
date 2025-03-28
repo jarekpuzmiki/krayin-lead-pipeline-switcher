@@ -3,7 +3,7 @@
 namespace Puzmiki\LeadPipelineSwitcher\Repositories;
 
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Lead\Repositories\LeadPipelineStageRepository;
+use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Puzmiki\LeadPipelineSwitcher\Contracts\PipelineSwitcher;
 use Illuminate\Support\Facades\Log;
