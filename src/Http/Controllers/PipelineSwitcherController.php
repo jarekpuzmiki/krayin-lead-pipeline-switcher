@@ -4,6 +4,7 @@ namespace Puzmiki\LeadPipelineSwitcher\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Webkul\Lead\Repositories\LeadPipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Puzmiki\LeadPipelineSwitcher\Repositories\PipelineSwitcherRepository;
@@ -19,10 +20,10 @@ class PipelineSwitcherController extends Controller
 
     public function switch(Request $request, $id)
     {
-        $this->validate($request, [
+        Validator::make($request->all(), [
             'pipeline_id' => 'required|integer',
             'stage_id'    => 'required|integer',
-        ]);
+        ])->validate();
 
         $this->pipelineSwitcherRepository->switch($id, $request->pipeline_id, $request->stage_id);
 
