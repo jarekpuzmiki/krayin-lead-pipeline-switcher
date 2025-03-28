@@ -19,6 +19,9 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'lead_pipeline_switcher');
         Log::info('✅ Loaded translations from Resources/lang');
 
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'lead_pipeline_switcher');
+        Log::info('✅ Loaded views from Resources/views');
+
         $this->publishes([
             __DIR__.'/../Resources/lang' => resource_path('lang/vendor/lead_pipeline_switcher'),
         ], 'lead-pipeline-switcher-lang');
@@ -32,6 +35,11 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
             $view->with('leadPipelineSwitcher', true);
             $view->with('pipelines', $leadPipelineRepository->all());
             $view->with('stages', $stageRepository->all());
+        });
+
+        // Automatyczne wstrzyknięcie naszego widoku do miejsca "admin.leads.view.actions.after"
+        app()->bind('events')->listen('admin.leads.view.actions.after', function () {
+            return view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
         });
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
