@@ -4,6 +4,8 @@ namespace Puzmiki\LeadPipelineSwitcher\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
+use Webkul\Lead\Repositories\LeadPipelineRepository;
+use Webkul\Lead\Repositories\StageRepository;
 
 class PipelineSwitcherServiceProvider extends ServiceProvider
 {
@@ -23,7 +25,13 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
 
         view()->composer('admin::leads.view', function ($view) {
             Log::info('🎯 View composer triggered for admin::leads.view');
+
+            $leadPipelineRepository = app(LeadPipelineRepository::class);
+            $stageRepository = app(StageRepository::class);
+
             $view->with('leadPipelineSwitcher', true);
+            $view->with('pipelines', $leadPipelineRepository->all());
+            $view->with('stages', $stageRepository->all());
         });
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
