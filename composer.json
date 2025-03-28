@@ -1,0 +1,30 @@
+{
+  "name": "puzmiki/krayin-lead-pipeline-switcher",
+  "description": "Krayin CRM module to switch leads between sales pipelines.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jarek Gadzinski",
+      "email": "jarek@puzmiki.pl"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Puzmiki\\LeadPipelineSwitcher\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Puzmiki\\LeadPipelineSwitcher\\Providers\\PipelineSwitcherServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.1",
+    "krayin/laravel-crm": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
