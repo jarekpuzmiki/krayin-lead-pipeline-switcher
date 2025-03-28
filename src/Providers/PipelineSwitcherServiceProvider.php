@@ -4,6 +4,7 @@ namespace Puzmiki\LeadPipelineSwitcher\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Event;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
 
@@ -32,16 +33,15 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
             $leadPipelineRepository = app(PipelineRepository::class);
             $stageRepository = app(StageRepository::class);
 
-            $view->with('leadPipelineSwitcher', true);
             $view->with('pipelines', $leadPipelineRepository->all());
             $view->with('stages', $stageRepository->all());
         });
 
-        // Automatyczne wstrzyknięcie naszego widoku do miejsca "admin.leads.view.actions.after"
-        $this->app['events']->listen('admin.leads.view.actions.after', function () {
+        // Automatyczne wstrzyknięcie przełącznika do hooka Blade'a
+        Event::listen('admin.leads.view.actions.after', function () {
+            Log::info('🚀 Injecting lead pipeline switcher view');
             return view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
         });
-        
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
     }
