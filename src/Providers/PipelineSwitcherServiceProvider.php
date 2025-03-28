@@ -38,9 +38,10 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
         });
 
         // Automatyczne wstrzyknięcie naszego widoku do miejsca "admin.leads.view.actions.after"
-        app()->bind('events')->listen('admin.leads.view.actions.after', function () {
+        $this->app['events']->listen('admin.leads.view.actions.after', function () {
             return view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
         });
+        
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
     }
