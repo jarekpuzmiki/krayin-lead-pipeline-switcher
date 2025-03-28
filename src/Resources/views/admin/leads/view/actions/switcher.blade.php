@@ -1,3 +1,4 @@
+<div>TEST Switcher</div>
 @if (isset($leadPipelineSwitcher) && $leadPipelineSwitcher)
     <form action="{{ route('admin.leads.switch-pipeline', $lead->id) }}" method="POST" class="flex items-center gap-2 mt-4">
         @csrf
