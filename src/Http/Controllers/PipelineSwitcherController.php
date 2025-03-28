@@ -3,11 +3,12 @@
 namespace Puzmiki\LeadPipelineSwitcher\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Webkul\Lead\Repositories\LeadPipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Puzmiki\LeadPipelineSwitcher\Repositories\PipelineSwitcherRepository;
 
-class PipelineSwitcherController
+class PipelineSwitcherController extends Controller
 {
     protected $pipelineSwitcherRepository;
 
