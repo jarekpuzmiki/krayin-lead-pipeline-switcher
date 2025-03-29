@@ -32,7 +32,7 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
             __DIR__.'/../Resources/lang' => resource_path('lang/vendor/lead_pipeline_switcher'),
         ], 'lead-pipeline-switcher-lang');
 
-        view()->composer('admin::leads.view', function ($view) {
+ /*       view()->composer('admin::leads.view', function ($view) {
             Log::info('🎯 View composer triggered for admin::leads.view');
 
             $leadPipelineRepository = app(PipelineRepository::class);
@@ -40,13 +40,30 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
 
             $view->with('pipelines', $leadPipelineRepository->all());
             $view->with('stages', $stageRepository->all());
+            $view->with('leadPipelineSwitcher', true);
+        });*/
+        view()->composer('*', function ($view) {
+            Log::info('🔥 GLOBAL composer działa w widoku: ' . $view->getName());
         });
 
-        Event::listen('lead.view.actions.after', function () {
-            Log::info('🚀 Injecting lead pipeline switcher view');
-
-            echo view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
+        Event::listen('admin.leads.edit.save_button.before', function () {
+            $lead = request()->route('id')
+                ? app(\Webkul\Lead\Repositories\LeadRepository::class)->findOrFail(request()->route('id'))
+                : null;
+        
+            if (! $lead) {
+                \Log::warning('❗ Nie znaleziono leada w edycji');
+                return;
+            }
+        
+            echo view('lead_pipeline_switcher::admin.leads.edit.switcher', [
+                'leadPipelineSwitcher' => true,
+                'lead' => $lead,
+                'pipelines' => app(\Webkul\Lead\Repositories\PipelineRepository::class)->all(),
+                'stages' => app(\Webkul\Lead\Repositories\StageRepository::class)->all(),
+            ])->render();
         });
+        
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
     }
