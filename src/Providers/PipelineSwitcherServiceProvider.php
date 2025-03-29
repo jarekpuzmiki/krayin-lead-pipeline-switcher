@@ -12,12 +12,7 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        // Automatyczne wstrzyknięcie przełącznika do hooka Blade'a
-        Event::listen('admin.leads.view.actions.after', function ($viewData) {
-            Log::info('🚀 Injecting lead pipeline switcher view');
-
-            return view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
-        });
+        //
     }
 
     public function boot()
@@ -45,6 +40,12 @@ class PipelineSwitcherServiceProvider extends ServiceProvider
 
             $view->with('pipelines', $leadPipelineRepository->all());
             $view->with('stages', $stageRepository->all());
+        });
+
+        Event::listen('lead.view.actions.after', function () {
+            Log::info('🚀 Injecting lead pipeline switcher view');
+
+            echo view('lead_pipeline_switcher::admin.leads.view.actions.switcher')->render();
         });
 
         Log::info('✅ PipelineSwitcherServiceProvider boot() completed');
